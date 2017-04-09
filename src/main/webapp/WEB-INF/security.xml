@@ -37,8 +37,8 @@
         <intercept-url pattern="/user/**" access="hasRole('ADMIN')" />
         <intercept-url pattern="/ticket/delete/**" access="hasRole('ADMIN')" />
         <intercept-url pattern="/ticket/**" access="hasAnyRole('USER','ADMIN')" />
-        <!--<form-login login-page="/login"
-                    authentication-failure-url="/login?error" />-->
+        <form-login login-page="/login"
+                    authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"
                 invalidate-session="true"
                 delete-cookies="JSESSIONID" />
