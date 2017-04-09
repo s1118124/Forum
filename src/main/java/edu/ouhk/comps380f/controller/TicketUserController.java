@@ -3,6 +3,7 @@ package edu.ouhk.comps380f.controller;
 import edu.ouhk.comps380f.dao.TicketUserRepository;
 import edu.ouhk.comps380f.model.TicketUser;
 import java.io.IOException;
+import javax.annotation.Resource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,8 +22,8 @@ import org.springframework.web.servlet.view.RedirectView;
 public class TicketUserController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
-    @Autowired
+
+    @Resource
     TicketUserRepository ticketUserRepo;
 
     @Autowired
@@ -73,20 +74,18 @@ public class TicketUserController {
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public View create(Form form) throws IOException {
-        TicketUser user = new TicketUser();
-        user.setUsername(form.getUsername());
-        user.setPassword(passwordEncoder.encode(form.getPassword()));
-        for (String role : form.getRoles()) {
-            user.addRole(role);
-        }
-        ticketUserRepo.create(user);
+        TicketUser user = new TicketUser(form.getUsername(),
+                passwordEncoder.encode(form.getPassword()),
+                form.getRoles()
+        );
+        ticketUserRepo.save(user);
         logger.info("User " + form.getUsername() + " created.");
         return new RedirectView("/user/list", true);
     }
 
     @RequestMapping(value = "delete/{username}", method = RequestMethod.GET)
     public View deleteTicket(@PathVariable("username") String username) {
-        ticketUserRepo.deleteByUsername(username);
+        ticketUserRepo.delete(ticketUserRepo.findOne(username));
         logger.info("User " + username + " deleted.");
         return new RedirectView("/user/list", true);
     }

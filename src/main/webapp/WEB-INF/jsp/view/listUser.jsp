@@ -32,7 +32,7 @@
                             <td>
                                 <c:forEach items="${user.roles}" var="role" varStatus="status">
                                     <c:if test="${!status.first}">, </c:if>
-                                    ${role}
+                                    ${role.role}
                                 </c:forEach>
                             </td>
                             <td>[<a href="<c:url value="/user/delete/${user.username}" />">Delete</a>]</td>
