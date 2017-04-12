@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support</title>
+        <title>User Control Panel</title>
     </head>
     <body>
         <c:url var="logoutUrl" value="/logout"/>
         <form action="${logoutUrl}" method="post">
-            <input type="submit" value="Log out" />
+            <input type="submit" value="Logout" />
+            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        </form>
+        <c:url var="listUrl" value="/post/list"/>
+        <form action="${listUrl}" method="post">
+            <input type="submit" value="Post List" />
             <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
         </form>
         <br /><br />
-        <a href="<c:url value="/ticket" />">Return to list tickets</a>
-        <h2>Users</h2>
+        <h2>Users Control Panel</h2>
         <a href="<c:url value="/user/create" />">Create a User</a><br /><br />
         <c:choose>
             <c:when test="${fn:length(ticketUsers) == 0}">
@@ -41,5 +45,7 @@
                 </table>
             </c:otherwise>
         </c:choose>
+        <br><br>
+        <a href="<c:url value="/" />">Return to Homepage</a>
     </body>
 </html>

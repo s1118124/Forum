@@ -43,9 +43,9 @@
                                         <c:out value="${ticket.subject}" /></a></td>
                                 <td><c:out value="${ticket.customerName}" /></td>
                                 <td>
-                                    <!-- security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'"-->            
-                                        <!--[<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>] -->
-                                    <!--/security:authorize -->
+                                    <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
+                                        [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
+                                    </security:authorize >
                                 </td>
                                 <td>
                                     <security:authorize access="hasRole('ADMIN')">            

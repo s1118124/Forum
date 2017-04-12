@@ -35,9 +35,9 @@
         </div>
 
         <h2>Thread #${ticket.id}: <c:out value="${ticket.subject}" /></h2>
-        <!-- security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'" -->            
-            <!--[<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>] -->
-        <!--/security:authorize -->
+        <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'" >            
+            [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
+        </security:authorize >
         <security:authorize access="hasRole('ADMIN')">            
             [<a href="<c:url value="/post/delete/${ticket.id}" />">Delete</a>]
         </security:authorize>
@@ -46,17 +46,17 @@
             <tr><td rowspan = 2><c:out value="${ticket.customerName}" /></td><td rowspan = 2><c:out value="${ticket.body}" />
                     <security:authorize access="hasAnyRole('ADMIN','USER')">
 
-                    <c:if test="${fn:length(ticket.attachments) > 0}">
-                        <br /><br />
-                        Attachments:<br />
-                        <c:forEach items="${ticket.attachments}" var="attachment"
-                                   varStatus="status">
-                            <c:if test="${!status.first}">, </c:if>
-                            <a href="<c:url value="/post/${ticket.id}/attachment/${attachment.name}" />">
-                                <c:out value="${attachment.name}" /></a><br />
-                        </c:forEach><br /><br />
-                    </c:if>
-            </security:authorize>
+                        <c:if test="${fn:length(ticket.attachments) > 0}">
+                            <br /><br />
+                            Attachments:<br />
+                            <c:forEach items="${ticket.attachments}" var="attachment"
+                                       varStatus="status">
+                                <c:if test="${!status.first}">, </c:if>
+                                <a href="<c:url value="/post/${ticket.id}/attachment/${attachment.name}" />">
+                                    <c:out value="${attachment.name}" /></a><br />
+                            </c:forEach><br /><br />
+                        </c:if>
+                    </security:authorize>
                 </td></tr>
             <!--  Reserved Space for reply -->
 

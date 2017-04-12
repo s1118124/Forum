@@ -29,7 +29,7 @@ public class TicketUserController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"", "list"}, method = {RequestMethod.GET,RequestMethod.POST})
     public String list(ModelMap model) {
         model.addAttribute("ticketUsers", ticketUserRepo.findAll());
         return "listUser";
