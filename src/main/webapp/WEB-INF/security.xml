@@ -38,7 +38,8 @@
         <intercept-url pattern="/ticket/delete/**" access="hasRole('ADMIN')" />
         <intercept-url pattern="/ticket/**" access="hasAnyRole('USER','ADMIN')" />
         <intercept-url pattern="/registry" access="permitAll" />
-        
+        <intercept-url pattern="/post/view/**" access="permitAll" />
+                
         <form-login login-page="/login"
                     authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"

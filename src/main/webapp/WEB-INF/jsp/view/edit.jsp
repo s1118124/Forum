@@ -23,7 +23,7 @@
                     <c:forEach items="${ticket.attachments}" var="attachment">
                         <li>
                             <c:out value="${attachment.name}" />
-                            [<a href="<c:url value="/ticket/${ticket.id}/delete/${attachment.name}" />">Delete</a>]
+                            [<a href="<c:url value="/post/${ticket.id}/delete/${attachment.name}" />">Delete</a>]
                         </li>
                     </c:forEach>
                 </ul>
@@ -32,6 +32,6 @@
             <input type="file" name="attachments" multiple="multiple"/><br/><br/>
             <input type="submit" value="Save"/><br/><br/>
         </form:form>
-        <a href="<c:url value="/ticket" />">Return to list tickets</a>
+        <a href="<c:url value="/post" />">Return to list tickets</a>
     </body>
 </html>

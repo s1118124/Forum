@@ -17,13 +17,14 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("ticket")
+@RequestMapping("post")
 public class TicketController {
 
     @Autowired
@@ -32,7 +33,7 @@ public class TicketController {
     @Autowired
     private AttachmentService attachmentService;
 
-    @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
+    @RequestMapping(value = {"", "list"}, method = {RequestMethod.GET,RequestMethod.POST})
     public String list(ModelMap model) {
         model.addAttribute("ticketDatabase", ticketService.getTickets());
         return "list";
@@ -47,9 +48,12 @@ public class TicketController {
         return new ModelAndView("view", "ticket", ticket);
     }
 
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        return new ModelAndView("add", "ticketForm", new Form());
+    @RequestMapping(value = "create", method = RequestMethod.GET, params = {"type"})
+    
+    public ModelAndView create(@RequestParam("type") String type) {
+        Form form = new Form();
+        form.setType(type);
+        return new ModelAndView("add", "ticketForm", form);
     }
 
     public static class Form {
@@ -57,6 +61,15 @@ public class TicketController {
         private String subject;
         private String body;
         private List<MultipartFile> attachments;
+        private String type;
+
+        public String getType() {
+            return type;
+        }
+
+        public void setType(String type) {
+            this.type = type;
+        }
 
         public String getSubject() {
             return subject;
@@ -84,10 +97,10 @@ public class TicketController {
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
-    public View create(Form form, Principal principal) throws IOException {
+    public View create(Form form, Principal principal,@RequestParam("type") String type) throws IOException {
         long ticketId = ticketService.createTicket(principal.getName(),
-                form.getSubject(), form.getBody(), form.getAttachments());
-        return new RedirectView("/ticket/view/" + ticketId, true);
+                form.getSubject(), form.getBody(), form.getAttachments(), type);
+        return new RedirectView("/post/view/" + ticketId, true);
     }
 
     @RequestMapping(
@@ -122,7 +135,7 @@ public class TicketController {
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
-            return new ModelAndView(new RedirectView("/ticket/list", true));
+            return new ModelAndView(new RedirectView("/post/list", true));
         }
 
         ModelAndView modelAndView = new ModelAndView("edit");
@@ -144,18 +157,18 @@ public class TicketController {
         if (ticket == null
                 || (!request.isUserInRole("ROLE_ADMIN")
                 && !principal.getName().equals(ticket.getCustomerName()))) {
-            return new RedirectView("/ticket/list", true);
+            return new RedirectView("/post/list", true);
         }
 
         ticketService.updateTicket(ticketId, form.getSubject(),
                 form.getBody(), form.getAttachments());
-        return new RedirectView("/ticket/view/" + ticketId, true);
+        return new RedirectView("/post/view/" + ticketId, true);
     }
 
     @RequestMapping(value = "delete/{ticketId}", method = RequestMethod.GET)
     public View deleteTicket(@PathVariable("ticketId") long ticketId) throws TicketNotFound {
         ticketService.delete(ticketId);
-        return new RedirectView("/ticket/list", true);
+        return new RedirectView("/post/list", true);
     }
 
 }

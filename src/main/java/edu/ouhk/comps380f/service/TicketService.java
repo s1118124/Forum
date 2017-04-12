@@ -10,7 +10,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface TicketService {
 
     public long createTicket(String customerName, String subject,
-            String body, List<MultipartFile> attachments) throws IOException;
+            String body, List<MultipartFile> attachments,String type) throws IOException;
 
     public List<Ticket> getTickets();
 

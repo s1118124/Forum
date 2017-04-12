@@ -4,6 +4,7 @@
         <title>Course Discussion Forum</title>
     </head>
     <body>
+        <div id="head_bar">
         <security:authorize access="isAnonymous()">
             <c:url var="loginUrl" value="/login"/>
             <form action="${loginUrl}" method="get">
@@ -13,7 +14,7 @@
             <form action="${regUrl}" method="get">
                 <input type="submit" value="Registry" />
             </form>
-                
+
         </security:authorize>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
             <c:url var="logoutUrl" value="/logout"/>
@@ -22,6 +23,18 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
             </form>
         </security:authorize>
+
+        <security:authorize access="hasRole('ADMIN')">            
+            <c:url var="listUrl" value="/post/list"/>
+            <form action="${listUrl}" method="post">
+                <input type="submit" value="Post List" />
+                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+        </security:authorize>
+        
+        </div>
+
+
         <h1>Course Discussion Forum</h1>
         <p>There is polling area</p>
         <ul><h2>Catergories:</h2>

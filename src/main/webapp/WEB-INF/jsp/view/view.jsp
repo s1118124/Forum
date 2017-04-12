@@ -11,11 +11,11 @@
         </form>
 
         <h2>Ticket #${ticket.id}: <c:out value="${ticket.subject}" /></h2>
-        <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
-            [<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>]
-        </security:authorize>
+        <!-- security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'" -->            
+            <!--[<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>] -->
+        <!--/security:authorize -->
         <security:authorize access="hasRole('ADMIN')">            
-            [<a href="<c:url value="/ticket/delete/${ticket.id}" />">Delete</a>]
+            [<a href="<c:url value="/post/delete/${ticket.id}" />">Delete</a>]
         </security:authorize>
         <br /><br />
         <i>Customer Name - <c:out value="${ticket.customerName}" /></i><br /><br />
@@ -25,10 +25,10 @@
             <c:forEach items="${ticket.attachments}" var="attachment"
                        varStatus="status">
                 <c:if test="${!status.first}">, </c:if>
-                <a href="<c:url value="/ticket/${ticket.id}/attachment/${attachment.name}" />">
+                <a href="<c:url value="/post/${ticket.id}/attachment/${attachment.name}" />">
                     <c:out value="${attachment.name}" /></a>
             </c:forEach><br /><br />
         </c:if>
-        <a href="<c:url value="/ticket" />">Return to list tickets</a>
+        <a href="<c:url value="/${ticket.type}" />">Return to board</a>
     </body>
 </html>

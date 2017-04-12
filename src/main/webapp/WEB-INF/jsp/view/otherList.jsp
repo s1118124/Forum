@@ -25,7 +25,7 @@
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br/>
         </security:authorize>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
-            <a href="<c:url value="/ticket/create?type=other" />">Create a Topic</a><br /><br />
+            <a href="<c:url value="/post/create?type=other" />">Create a Topic</a><br /><br />
         </security:authorize>
 
         <c:choose>
@@ -39,17 +39,17 @@
                                 <c:if test = "${ticket.getType() == 'lecture'}">
                             <tr>
                                 <td>${ticket.id}</td>
-                                <td><a href="<c:url value="/ticket/view/${ticket.id}" />">
+                                <td><a href="<c:url value="/post/view/${ticket.id}" />">
                                         <c:out value="${ticket.subject}" /></a></td>
                                 <td><c:out value="${ticket.customerName}" /></td>
                                 <td>
                                     <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
-                                        [<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>]
+                                        [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
                                     </security:authorize>
                                 </td>
                                 <td>
                                     <security:authorize access="hasRole('ADMIN')">            
-                                        [<a href="<c:url value="/ticket/delete/${ticket.id}" />">Delete</a>]
+                                        [<a href="<c:url value="/post/delete/${ticket.id}" />">Delete</a>]
                                     </security:authorize>
                                 </td>
                             </tr>
