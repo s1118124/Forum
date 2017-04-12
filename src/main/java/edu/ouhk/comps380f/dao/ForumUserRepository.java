@@ -1,15 +1,11 @@
 package edu.ouhk.comps380f.dao;
 
 import edu.ouhk.comps380f.model.ForumUser;
-import java.util.List;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  *
  * @author Rick Cheung
  */
-public interface ForumUserRepository {
- public void create(ForumUser user);
- public List<ForumUser> findAll();
- public ForumUser findByUsername(String username);
- public void deleteByUsername(String username);
+public interface ForumUserRepository extends JpaRepository<ForumUser, String> {
 }
