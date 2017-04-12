@@ -18,8 +18,7 @@ import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.view.RedirectView;
 
 @Controller
-@RequestMapping("user")
-public class TicketUserController {
+public class TicketUserRegistryController {
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
@@ -28,12 +27,6 @@ public class TicketUserController {
 
     @Autowired
     private PasswordEncoder passwordEncoder;
-
-    @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
-    public String list(ModelMap model) {
-        model.addAttribute("ticketUsers", ticketUserRepo.findAll());
-        return "listUser";
-    }
 
     public static class Form {
 
@@ -66,26 +59,9 @@ public class TicketUserController {
         }
 
     }
-
-    @RequestMapping(value = "create", method = RequestMethod.GET)
-    public ModelAndView create() {
-        return new ModelAndView("addUser", "ticketUser", new Form());
-    }
-
-    @RequestMapping(value = "create", method = RequestMethod.POST)
-    public View create(Form form) throws IOException {
-        TicketUser user = new TicketUser(form.getUsername(),
-                passwordEncoder.encode(form.getPassword()),
-                form.getRoles()
-        );
-        ticketUserRepo.save(user);
-        logger.info("User " + form.getUsername() + " created.");
-        return new RedirectView("/user/list", true);
-    }
-
-        @RequestMapping(value = "../registry", method = RequestMethod.GET)
+        @RequestMapping(value = "registry", method = RequestMethod.GET)
     public ModelAndView registry() {
-        return new ModelAndView("../registry", "ticketUser", new Form());
+        return new ModelAndView("registry", "ticketUser", new Form());
     }
     
     @RequestMapping(value = "registry", method = RequestMethod.POST)
@@ -97,15 +73,6 @@ public class TicketUserController {
         ticketUserRepo.save(user);
         logger.info("User " + form.getUsername() + " created.");
         return new RedirectView("/login", true);
-    }
-
-    
-    
-    @RequestMapping(value = "delete/{username}", method = RequestMethod.GET)
-    public View deleteTicket(@PathVariable("username") String username) {
-        ticketUserRepo.delete(ticketUserRepo.findOne(username));
-        logger.info("User " + username + " deleted.");
-        return new RedirectView("/user/list", true);
     }
 
 }

@@ -20,19 +20,28 @@
                 <i>There are no tickets in the system.</i>
             </c:when>
             <c:otherwise>
-                <c:forEach items="${ticketDatabase}" var="ticket">
-                    Ticket ${ticket.id}:
-                    <a href="<c:url value="/ticket/view/${ticket.id}" />">
-                        <c:out value="${ticket.subject}" /></a>
-                    (customer: <c:out value="${ticket.customerName}" />)
-                    <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
-                        [<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>]
-                    </security:authorize>
-                    <security:authorize access="hasRole('ADMIN')">            
-                        [<a href="<c:url value="/ticket/delete/${ticket.id}" />">Delete</a>]
-                    </security:authorize>
-                    <br /><br />
-                </c:forEach>
+                    <table>
+                        <tr><th>Ticket</th> <th>Subject</th><th>User</th><th></th><th></th></tr>
+                        <c:forEach items="${ticketDatabase}" var="ticket">
+                        <tr>
+                            <td>${ticket.id}</td>
+                            <td><a href="<c:url value="/ticket/view/${ticket.id}" />">
+                            <c:out value="${ticket.subject}" /></a></td>
+                            <td><c:out value="${ticket.customerName}" /></td>
+                            <td>
+                        <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
+                            [<a href="<c:url value="/ticket/edit/${ticket.id}" />">Edit</a>]
+                        </security:authorize>
+                            </td>
+                            <td>
+                        <security:authorize access="hasRole('ADMIN')">            
+                            [<a href="<c:url value="/ticket/delete/${ticket.id}" />">Delete</a>]
+                        </security:authorize>
+                            </td>
+                        </tr>
+                         </c:forEach>
+                    </table>
+               
             </c:otherwise>
         </c:choose>
     </body>
