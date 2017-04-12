@@ -34,7 +34,7 @@
             </c:when>
             <c:otherwise>
                 <table>
-                    <tr><th>Post ID</th> <th>Subject</th><th>Post by</th><th></th><th></th></tr>
+                    <tr><th>Thread ID</th> <th>Subject</th><th>Post by</th><th></th><th></th></tr>
                             <c:forEach items="${ticketDatabase}" var="ticket">
                                 <c:if test = "${ticket.type eq'lecture'}">
                             <tr>
