@@ -15,11 +15,24 @@ public class IndexController {
         return "index";
     }
 
-    
     @RequestMapping("login")
     public String login() {
         return "login";
     }
 
-        
+    @RequestMapping(value = {"/lecture"}, method = RequestMethod.GET)
+    public String lecture() {
+        return "lectureList";
+    }
+
+    @RequestMapping(value = {"/lab"}, method = RequestMethod.GET)
+    public String lab() {
+        return "labList";
+    }
+
+    @RequestMapping(value = {"/other"}, method = RequestMethod.GET)
+    public String other() {
+        return "otherList";
+    }
+
 }
