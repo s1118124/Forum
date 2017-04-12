@@ -29,8 +29,14 @@
             class="edu.ouhk.comps380f.dao.ForumUserRepositoryImpl"/>
     <b:bean id="forumUserService" class="edu.ouhk.comps380f.dao.ForumUserService" />
 
+    
+    <b:bean id="bCryptPasswordEncoder"
+            class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     <authentication-manager>
-        <authentication-provider user-service-ref="forumUserService" />
+        <authentication-provider user-service-ref="forumUserService">
+            <password-encoder ref="bCryptPasswordEncoder" />
+        </authentication-provider>
     </authentication-manager>
+
 
 </b:beans>
