@@ -37,12 +37,14 @@ public class IndexController {
     }
 
     @RequestMapping(value = {"/lab"}, method = RequestMethod.GET)
-    public String lab() {
+    public String lab(ModelMap model) {
+        model.addAttribute("ticketDatabase", ticketService.getTickets());
         return "labList";
     }
 
     @RequestMapping(value = {"/other"}, method = RequestMethod.GET)
-    public String other() {
+    public String other(ModelMap model) {
+        model.addAttribute("ticketDatabase", ticketService.getTickets());
         return "otherList";
     }
 

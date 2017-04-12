@@ -20,9 +20,9 @@
             </security:authorize>
         </div>
 
-        <h2>Other</h2>
+        <h2>Lecture</h2>
         <security:authorize access="hasRole('ADMIN')">    
-            <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br/>
+            <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
             <a href="<c:url value="/post/create?type=other" />">Create a Topic</a><br /><br />
@@ -35,17 +35,17 @@
             <c:otherwise>
                 <table>
                     <tr><th>Post ID</th> <th>Subject</th><th>Post by</th><th></th><th></th></tr>
-                            <c:forEach items="${ticketDatabase}" var="other">
-                                <c:if test = "${ticket.getType() == 'lecture'}">
+                            <c:forEach items="${ticketDatabase}" var="ticket">
+                                <c:if test = "${ticket.type eq'other'}">
                             <tr>
                                 <td>${ticket.id}</td>
                                 <td><a href="<c:url value="/post/view/${ticket.id}" />">
                                         <c:out value="${ticket.subject}" /></a></td>
                                 <td><c:out value="${ticket.customerName}" /></td>
                                 <td>
-                                    <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
-                                        [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
-                                    </security:authorize>
+                                    <!-- security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'"-->            
+                                        <!--[<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>] -->
+                                    <!--/security:authorize -->
                                 </td>
                                 <td>
                                     <security:authorize access="hasRole('ADMIN')">            
