@@ -5,19 +5,41 @@
  */
 package edu.ouhk.comps380f.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  *
  * @author B
  */
-public class ForumUser {
+@Entity
+@Table(name = "users")
+public class ForumUser implements Serializable {
 
+    @Id
     private String username;
     private String password;
-    private List<String> roles = new ArrayList<>();
-    // ... getters and setters for username and password
+
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<UserRole> roles = new ArrayList<>();
+
+    public ForumUser() {
+    }
+
+    public ForumUser(String username, String password, String[] roles) {
+        this.username = username;
+        this.password = password;
+        for (String role : roles) {
+            this.roles.add(new UserRole(this, role));
+        }
+    }
 
     public String getUsername() {
         return username;
@@ -35,16 +57,12 @@ public class ForumUser {
         this.password = password;
     }
 
-    public List<String> getRoles() {
+    public List<UserRole> getRoles() {
         return roles;
     }
 
-    public void addRole(String role) {
-        this.roles.add(role);
-    }
-
-    public boolean hasRole(String role) {
-        return this.roles.contains(role);
+    public void setRoles(List<UserRole> roles) {
+        this.roles = roles;
     }
 
 }
