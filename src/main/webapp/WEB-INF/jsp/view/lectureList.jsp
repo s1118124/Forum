@@ -25,7 +25,7 @@
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
-            <a href="<c:url value="/post/create?type=lab" />">Create a Topic</a><br /><br />
+            <a href="<c:url value="/post/create?type=lecture" />">Create a Topic</a><br /><br />
         </security:authorize>
 
         <c:choose>
