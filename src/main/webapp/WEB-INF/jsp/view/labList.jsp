@@ -20,7 +20,7 @@
             </security:authorize>
         </div>
 
-        <h2>Lecture</h2>
+        <h2>Lab</h2>
         <security:authorize access="hasRole('ADMIN')">    
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
@@ -43,9 +43,11 @@
                                         <c:out value="${ticket.subject}" /></a></td>
                                 <td><c:out value="${ticket.customerName}" /></td>
                                 <td>
-                                    <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
+                                    <!--security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'"-->            
+
+                                    <security:authorize access="hasRole('ADMIN')">            
                                         [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
-                                    </security:authorize >
+                                    </security:authorize>
                                 </td>
                                 <td>
                                     <security:authorize access="hasRole('ADMIN')">            

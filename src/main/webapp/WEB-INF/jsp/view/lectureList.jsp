@@ -25,7 +25,7 @@
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>
         <security:authorize access="hasAnyRole('ADMIN','USER')">
-            <a href="<c:url value="/post/create?type=lecture" />">Create a Topic</a><br /><br />
+            <a href="<c:url value="/post/create?type=lab" />">Create a Topic</a><br /><br />
         </security:authorize>
 
         <c:choose>
@@ -43,9 +43,11 @@
                                         <c:out value="${ticket.subject}" /></a></td>
                                 <td><c:out value="${ticket.customerName}" /></td>
                                 <td>
-                                    <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'">            
+                                    <!--security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'"-->            
+
+                                    <security:authorize access="hasRole('ADMIN')">            
                                         [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
-                                    </security:authorize >
+                                    </security:authorize>
                                 </td>
                                 <td>
                                     <security:authorize access="hasRole('ADMIN')">            
