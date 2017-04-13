@@ -76,7 +76,7 @@
                         <td><c:out value="${ticket2.customerName}" /></td>
                         <td><c:out value="${ticket2.body}" />
                             <security:authorize access="hasAnyRole('ADMIN','USER')">
-                                
+
                                 <c:if test="${fn:length(ticket2.attachments) > 0}">
                                     <br /><br />
                                     Attachments:<br />
@@ -87,6 +87,17 @@
                                             <c:out value="${attachment.name}" /></a><br />
                                     </c:forEach><br /><br />
                                 </c:if>
+                            </security:authorize>
+
+                            <security:authorize access="hasAnyRole('ADMIN','USER')">            
+
+                                <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket2.customerName}'" >            
+                                    [<a href="<c:url value="/post/edit/${ticket2.id}" />">Edit</a>]
+                                </security:authorize>
+                                <security:authorize access="hasRole('ADMIN')">            
+                                    [<a href="<c:url value="/post/delete/${ticket2.id}" />">Delete</a>]
+                                </security:authorize>
+
                             </security:authorize>
                         </td></tr>
                     </c:if>
