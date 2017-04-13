@@ -33,10 +33,14 @@
                 <i>There are no posts in this board.</i>
             </c:when>
             <c:otherwise>
+                <c:set var="count" value="0" scope="page" />
+
                 <table>
                     <tr><th>Thread ID</th> <th>Subject</th><th>Post by</th><th></th><th></th></tr>
                             <c:forEach items="${ticketDatabase}" var="ticket">
                                 <c:if test = "${ticket.type eq'other'}">
+                                    <c:set var="count" value="${count + 1}" scope="page"/>
+
                             <tr>
                                 <td>${ticket.id}</td>
                                 <td><a href="<c:url value="/post/view/${ticket.id}" />">
@@ -61,6 +65,8 @@
                         </c:if>
                     </c:forEach>
                 </table>
+                <p>Total post:<c:out value="${count}" /> </p>
+
 
             </c:otherwise>
         </c:choose>
