@@ -206,7 +206,7 @@ public class TicketController {
     public View reply(Form form, Principal principal,@RequestParam("pid") long pid) throws IOException {
         long ticketId = ticketService.createTicket(principal.getName(),
                 form.getSubject(), form.getBody(), form.getAttachments(), "reply" ,"reply", pid);
-        return new RedirectView("/post/view/" + ticketId, true);
+        return new RedirectView("/post/view/" + pid, true);
     }
     
     

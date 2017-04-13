@@ -72,6 +72,11 @@
             <!--  Reserved Space for reply -->
 
             <table>
+                <security:authorize access="hasAnyRole('ADMIN','USER')">
+
+                <a href="<c:url value="/post/reply?pid=${ticket.id}" />">Comment</a>
+                <p>
+                </security:authorize>
 
                 <a href="<c:url value="/${ticket.type}" />">Return to board</a>
                 </body>
