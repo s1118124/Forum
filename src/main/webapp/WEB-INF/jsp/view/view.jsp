@@ -35,18 +35,18 @@
         </div>
 
         <h2>Thread #${ticket.id}: <c:out value="${ticket.subject}" /></h2>
-        
+
         <security:authorize access="hasAnyRole('ADMIN','USER')">            
 
-        <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'" >            
-            [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
+            <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'" >            
+                [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
+            </security:authorize>
+            <security:authorize access="hasRole('ADMIN')">            
+                [<a href="<c:url value="/post/delete/${ticket.id}" />">Delete</a>]
+            </security:authorize>
+
         </security:authorize>
-        <security:authorize access="hasRole('ADMIN')">            
-            [<a href="<c:url value="/post/delete/${ticket.id}" />">Delete</a>]
-        </security:authorize>
-            
-        </security:authorize>
-            
+
         <table>
             <tr><th>Post by</th><th>Message</th></tr>
             <tr>
@@ -67,17 +67,41 @@
                     </security:authorize>
                 </td></tr>
             <tr></tr>
-            <tr><th>Comment by</th><th>Comment</th><tr>
+            <tr><th>Comment by</th><th>Comment</th></tr>
 
-            <!--  Reserved Space for reply -->
+            <!--Working Area-->
+            <c:forEach items="${ticketDatabase}" var="ticket2">
+                <c:if test = "${ticket2.belongTo eq ticket.id}">
+                    <tr>
+                        <td><c:out value="${ticket2.customerName}" /></td>
+                        <td><c:out value="${ticket2.body}" />
+                            <security:authorize access="hasAnyRole('ADMIN','USER')">
+                                
+                                <c:if test="${fn:length(ticket2.attachments) > 0}">
+                                    <br /><br />
+                                    Attachments:<br />
+                                    <c:forEach items="${ticket2.attachments}" var="attachment"
+                                               varStatus="status">
+                                        <c:if test="${!status.first}">, </c:if>
+                                        <a href="<c:url value="/post/${ticket2.id}/attachment/${attachment.name}" />">
+                                            <c:out value="${attachment.name}" /></a><br />
+                                    </c:forEach><br /><br />
+                                </c:if>
+                            </security:authorize>
+                        </td></tr>
+                    </c:if>
+                </c:forEach>
 
-            <table>
-                <security:authorize access="hasAnyRole('ADMIN','USER')">
+            <!--Working Area-->
 
-                <a href="<c:url value="/post/reply?pid=${ticket.id}" />">Comment</a>
-                <p>
-                </security:authorize>
+        </table>
 
-                <a href="<c:url value="/${ticket.type}" />">Return to board</a>
-                </body>
-                </html>
+        <security:authorize access="hasAnyRole('ADMIN','USER')">
+
+            <a href="<c:url value="/post/reply?pid=${ticket.id}" />">Comment</a>
+            <p>
+            </security:authorize>
+
+            <a href="<c:url value="/${ticket.type}" />">Return to board</a>
+    </body>
+</html>

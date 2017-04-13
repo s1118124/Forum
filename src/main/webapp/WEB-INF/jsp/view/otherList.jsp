@@ -20,7 +20,7 @@
             </security:authorize>
         </div>
 
-        <h2>Lecture</h2>
+        <h2>Other</h2>
         <security:authorize access="hasRole('ADMIN')">    
             <a href="<c:url value="/user" />">Manage User Accounts</a><br /><br />
         </security:authorize>

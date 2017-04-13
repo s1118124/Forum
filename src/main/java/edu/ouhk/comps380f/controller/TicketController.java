@@ -40,11 +40,13 @@ public class TicketController {
     }
 
     @RequestMapping(value = "view/{ticketId}", method = RequestMethod.GET)
-    public ModelAndView view(@PathVariable("ticketId") long ticketId) {
+    public ModelAndView view(@PathVariable("ticketId") long ticketId, ModelMap model) {
         Ticket ticket = ticketService.getTicket(ticketId);
         if (ticket == null) {
             return new ModelAndView(new RedirectView("/ticket/list", true));
         }
+        model.addAttribute("ticketDatabase", ticketService.getTickets());
+
         return new ModelAndView("view", "ticket", ticket);
     }
 
