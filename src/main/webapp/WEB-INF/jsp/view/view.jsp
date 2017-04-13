@@ -35,12 +35,18 @@
         </div>
 
         <h2>Thread #${ticket.id}: <c:out value="${ticket.subject}" /></h2>
+        
+        <security:authorize access="hasAnyRole('ADMIN','USER')">            
+
         <security:authorize access="hasRole('ADMIN') or principal.username=='${ticket.customerName}'" >            
             [<a href="<c:url value="/post/edit/${ticket.id}" />">Edit</a>]
-        </security:authorize >
+        </security:authorize>
         <security:authorize access="hasRole('ADMIN')">            
             [<a href="<c:url value="/post/delete/${ticket.id}" />">Delete</a>]
         </security:authorize>
+            
+        </security:authorize>
+            
         <table>
             <tr><th>Post by</th><th>Comment</th></tr>
             <tr><td rowspan = 2><c:out value="${ticket.customerName}" /></td><td rowspan = 2><c:out value="${ticket.body}" />
