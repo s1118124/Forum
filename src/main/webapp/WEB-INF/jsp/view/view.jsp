@@ -70,8 +70,11 @@
             <tr><th>Comment by</th><th>Comment</th></tr>
 
             <!--Working Area-->
+            <c:set var="count" value="0" scope="page" />
             <c:forEach items="${ticketDatabase}" var="ticket2">
                 <c:if test = "${ticket2.belongTo eq ticket.id}">
+                    <c:set var="count" value="${count + 1}" scope="page"/>
+
                     <tr>
                         <td><c:out value="${ticket2.customerName}" /></td>
                         <td><c:out value="${ticket2.body}" />
@@ -106,6 +109,8 @@
             <!--Working Area-->
 
         </table>
+        <p>Total replies: <c:out value="${count}" /> </p>
+
 
         <security:authorize access="hasAnyRole('ADMIN','USER')">
 
