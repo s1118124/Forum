@@ -190,5 +190,26 @@ public class TicketController {
         ticketService.delete(ticketId);
         return new RedirectView("/post/list", true);
     }
+    
+    
+    @RequestMapping(value = "reply", method = RequestMethod.GET, params = {"pid"})
+    
+    public ModelAndView reply(@RequestParam("pid") long pid) {
+        Form form = new Form();
+        form.setType("reply");
+        form.setPostType("reply");
+        form.setBelongTo(pid);
+        return new ModelAndView("add", "ticketForm", form);
+    }
+    
+        @RequestMapping(value = "reply", method = RequestMethod.POST)
+    public View reply(Form form, Principal principal,@RequestParam("pid") long pid) throws IOException {
+        long ticketId = ticketService.createTicket(principal.getName(),
+                form.getSubject(), form.getBody(), form.getAttachments(), "reply" ,"reply", pid);
+        return new RedirectView("/post/view/" + ticketId, true);
+    }
+    
+    
+    
 
 }
