@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support Login</title>
+        <title>Course Discussion Forum Login</title>
     </head>
     <body>
         <c:if test="${param.error != null}">

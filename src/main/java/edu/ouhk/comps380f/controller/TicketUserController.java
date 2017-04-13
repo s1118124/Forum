@@ -83,7 +83,7 @@ public class TicketUserController {
         return new RedirectView("/user/list", true);
     }
 
-        @RequestMapping(value = "../registry", method = RequestMethod.GET)
+    @RequestMapping(value = "../registry", method = RequestMethod.GET)
     public ModelAndView registry() {
         return new ModelAndView("../registry", "ticketUser", new Form());
     }

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Customer Support</title>
+        <title>Course Discussion Forum Registry</title>
     </head>
     <body>
         <h2>Create a User</h2>
