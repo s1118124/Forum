@@ -25,12 +25,14 @@ public class TicketServiceImpl implements TicketService {
     @Override
     @Transactional
     public long createTicket(String customerName, String subject,
-            String body, List<MultipartFile> attachments,String type) throws IOException {
+            String body, List<MultipartFile> attachments,String type, String postType, long belongTo) throws IOException {
         Ticket ticket = new Ticket();
         ticket.setCustomerName(customerName);
         ticket.setSubject(subject);
         ticket.setBody(body);
         ticket.setType(type);
+        ticket.setPostType(postType);
+        ticket.setBelongTo(belongTo);
 
         for (MultipartFile filePart : attachments) {
             Attachment attachment = new Attachment();

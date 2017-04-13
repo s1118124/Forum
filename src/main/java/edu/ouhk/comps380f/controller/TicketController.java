@@ -53,6 +53,8 @@ public class TicketController {
     public ModelAndView create(@RequestParam("type") String type) {
         Form form = new Form();
         form.setType(type);
+        form.setPostType("post");
+        form.setBelongTo(0);
         return new ModelAndView("add", "ticketForm", form);
     }
 
@@ -62,6 +64,24 @@ public class TicketController {
         private String body;
         private List<MultipartFile> attachments;
         private String type;
+        private String postType;
+        private long belongTo;
+
+        public String getPostType() {
+            return postType;
+        }
+
+        public void setPostType(String postType) {
+            this.postType = postType;
+        }
+
+        public long getBelongTo() {
+            return belongTo;
+        }
+
+        public void setBelongTo(long belongTo) {
+            this.belongTo = belongTo;
+        }
 
         public String getType() {
             return type;
@@ -99,7 +119,7 @@ public class TicketController {
     @RequestMapping(value = "create", method = RequestMethod.POST)
     public View create(Form form, Principal principal,@RequestParam("type") String type) throws IOException {
         long ticketId = ticketService.createTicket(principal.getName(),
-                form.getSubject(), form.getBody(), form.getAttachments(), type);
+                form.getSubject(), form.getBody(), form.getAttachments(), type , form.getPostType(), form.getBelongTo());
         return new RedirectView("/post/view/" + ticketId, true);
     }
 

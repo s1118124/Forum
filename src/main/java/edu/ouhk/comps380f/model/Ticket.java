@@ -27,11 +27,33 @@ public class Ticket implements Serializable {
     private String body;
 
     private String type;
+    
+    private String postType;
+    
+    private long belongTo;
+
 
     @OneToMany(mappedBy = "ticket", fetch = FetchType.EAGER,
             cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Attachment> attachments = new ArrayList<>();
+    
+        public long getBelongTo() {
+        return belongTo;
+    }
 
+    public void setBelongTo(long belongTo) {
+        this.belongTo = belongTo;
+    }
+
+
+    public String getPostType() {
+        return postType;
+    }
+
+    public void setPostType(String postType) {
+        this.postType = postType;
+    }
+    
     public String getType() {
         return type;
     }
