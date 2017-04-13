@@ -48,8 +48,10 @@
         </security:authorize>
             
         <table>
-            <tr><th>Post by</th><th>Comment</th></tr>
-            <tr><td rowspan = 2><c:out value="${ticket.customerName}" /></td><td rowspan = 2><c:out value="${ticket.body}" />
+            <tr><th>Post by</th><th>Message</th></tr>
+            <tr>
+                <td rowspan = 2><c:out value="${ticket.customerName}" /></td>
+                <td rowspan = 2><c:out value="${ticket.body}" />
                     <security:authorize access="hasAnyRole('ADMIN','USER')">
 
                         <c:if test="${fn:length(ticket.attachments) > 0}">
@@ -64,6 +66,9 @@
                         </c:if>
                     </security:authorize>
                 </td></tr>
+            <tr></tr>
+            <tr><th>Comment by</th><th>Comment</th><tr>
+
             <!--  Reserved Space for reply -->
 
             <table>
