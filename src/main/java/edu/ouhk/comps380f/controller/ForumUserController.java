@@ -23,14 +23,14 @@ public class ForumUserController {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
     
     @Autowired
-    ForumUserRepository ticketUserRepo;
+    ForumUserRepository forumUserRepo;
 
     @Autowired
     private PasswordEncoder passwordEncoder;
 
     @RequestMapping(value = {"", "list"}, method = RequestMethod.GET)
     public String list(ModelMap model) {
-        model.addAttribute("ticketUsers", ticketUserRepo.findAll());
+        model.addAttribute("forumUsers", forumUserRepo.findAll());
         return "listUser";
     }
 
@@ -68,7 +68,7 @@ public class ForumUserController {
 
     @RequestMapping(value = "create", method = RequestMethod.GET)
     public ModelAndView create() {
-        return new ModelAndView("addUser", "ticketUser", new Form());
+        return new ModelAndView("addUser", "forumUser", new Form());
     }
 
     @RequestMapping(value = "create", method = RequestMethod.POST)
@@ -79,16 +79,34 @@ public class ForumUserController {
         for (String role : form.getRoles()) {
             user.addRole(role);
         }
-        ticketUserRepo.create(user);
+        forumUserRepo.create(user);
         logger.info("User " + form.getUsername() + " created.");
         return new RedirectView("/user/list", true);
     }
 
     @RequestMapping(value = "delete/{username}", method = RequestMethod.GET)
-    public View deleteTicket(@PathVariable("username") String username) {
-        ticketUserRepo.deleteByUsername(username);
+    public View deleteUser(@PathVariable("username") String username) {
+        forumUserRepo.deleteByUsername(username);
         logger.info("User " + username + " deleted.");
         return new RedirectView("/user/list", true);
+    }
+    
+    @RequestMapping(value = "registry", method = RequestMethod.GET)
+    public ModelAndView registry() {
+        return new ModelAndView("registry", "forumUser", new Form());
+    }
+    
+    @RequestMapping(value = "registry", method = RequestMethod.POST)
+    public View registry(Form form) throws IOException {
+        ForumUser user = new ForumUser();
+        user.setUsername(form.getUsername());
+        user.setPassword(passwordEncoder.encode(form.getPassword()));
+        for (String role : form.getRoles()) {
+            user.addRole(role);
+        }
+        forumUserRepo.create(user);
+        logger.info("User " + form.getUsername() + " created.");
+        return new RedirectView("/index", true);
     }
 
 }

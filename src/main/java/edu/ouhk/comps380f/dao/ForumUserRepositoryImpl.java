@@ -94,14 +94,14 @@ public class ForumUserRepositoryImpl implements ForumUserRepository {
 
     @Override
     public ForumUser findByUsername(String username) {
-        ForumUser ticketUser = jdbcOp.queryForObject(SQL_SELECT_USER,
+        ForumUser user = jdbcOp.queryForObject(SQL_SELECT_USER,
                 new UserRowMapper(), username);
         List<Map<String, Object>> rows = jdbcOp.queryForList(SQL_SELECT_ROLES,
                 username);
         for (Map<String, Object> row : rows) {
-            ticketUser.addRole((String) row.get("role"));
+            user.addRole((String) row.get("role"));
         }
-        return ticketUser;
+        return user;
 
     }
 

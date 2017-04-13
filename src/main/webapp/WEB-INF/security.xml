@@ -18,6 +18,7 @@
     </b:bean>
     <http auto-config="true">
         <intercept-url pattern="/topic/**" access="permitAll" /> <!--access="hasAnyRole('USER','ADMIN')"-->
+        <intercept-url pattern="/user/list/**" access="hasRole('ADMIN')" />
         <form-login login-page="/login" authentication-failure-url="/login?error" />
         <logout logout-success-url="/login?logout"
                 invalidate-session="true"
@@ -28,8 +29,7 @@
     <b:bean id="forumUserRepo"
             class="edu.ouhk.comps380f.dao.ForumUserRepositoryImpl"/>
     <b:bean id="forumUserService" class="edu.ouhk.comps380f.dao.ForumUserService" />
-
-    
+  
     <b:bean id="bCryptPasswordEncoder"
             class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
     <authentication-manager>
