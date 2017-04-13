@@ -3,6 +3,9 @@ CREATE TABLE ticket (
     name VARCHAR(255) NOT NULL,
     subject VARCHAR(255) NOT NULL,
     body VARCHAR(255) NOT NULL,
+    type VARCHAR(255),
+    postType VARCHAR(255),
+    belongTo INTEGER,
     PRIMARY KEY (id)
 );
 
