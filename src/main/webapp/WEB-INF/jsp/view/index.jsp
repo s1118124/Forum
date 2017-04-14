@@ -41,7 +41,7 @@
 
 
         <h1>Course Discussion Forum</h1>
-        <p>There is polling area</p>
+        <p>Here is polling area</p>
         <ul><h2>Catergories:</h2>
             <li><a href="<c:url value="/lecture" />">Lecture</a></li>
             <li><a href="<c:url value="/lab" />">Lab</a></li>
